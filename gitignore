@@ -1,7 +1,0 @@
-.DS_Store
-.env
-n8n_data/
-crash.journal
-database.sqlite
-n8nEventLog-1.log
-n8nEventLog.log
