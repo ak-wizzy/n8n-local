@@ -24,9 +24,10 @@ services:
     networks:
       - pilot-network
 
-volumes:
-  n8n_data:
-
 networks:
   pilot-network:
+    external: true
+
+volumes:
+  n8n_data:
     external: true
