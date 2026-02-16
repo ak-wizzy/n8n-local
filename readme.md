@@ -1,28 +1,47 @@
-# 🧠 n8n Local Automation Hub
+=================================================================
+n8n Docker Deployment
+=================================================================
 
-This project sets up a **self-hosted n8n instance** running locally in Docker.  
-Use it to build AI agents, connect APIs like OpenAI or Telegram, and automate workflows securely from your own environment.
+Production-ready Docker deployment for n8n using environment-based configuration.
+This repository provides a portable and reproducible setup for running n8n with Docker Compose. It is suitable for home labs, small production environments, and reverse proxy deployments.
 
----
+The configuration follows a clean infrastructure pattern:
+    • Containers are disposable
+    • Environment variables define identity
+    • Volumes store state
+    • Git tracks intent, not runtime data
 
-## 🚀 Getting Started
+Overview
+This setup supports:
+    • Local-only deployments
+    • Reverse proxy / domain-based deployments
+    • Environment-based configuration
+    • Persistent storage using Docker volumes
+    • Forward-compatible settings aligned with recent n8n changes
 
-### 1. Clone or Create Project Folder
-```bash
-mkdir ~/n8n-local
-cd ~/n8n-local
+Requirements
+    • Docker
+    • Docker Compose
+    • Optional: Reverse proxy (for domain-based setup)
 
+Setup
+    1. Clone the repository.
+    2. Create a .env file based on the provided example.
+    3. Configure your timezone, authentication credentials, host, webhook URL, and encryption key.
+    4. Start the service using Docker Compose.
 
-=============================================
+Important Configuration Notes
 
-# 1. Stop the container
-docker-compose down
+Encryption Key
+The N8N_ENCRYPTION_KEY must remain consistent across deployments if you intend to migrate or restore backups. Changing this key will make previously saved credentials unreadable.
+Host and Webhook URL
+N8N_HOST and WEBHOOK_URL must reflect how external services access your instance.
+For local development, use localhost.
+For production, use your public domain and HTTPS.
+Only one host value should be defined per environment.
 
-# 2. (Optional) Back up existing data
-cp -r ./n8n_data ./n8n_data_backup_$(date +%F)
-
-# 3. Pull the latest image
-docker pull n8nio/n8n:latest
-
-# 4. Restart n8n
-docker-compose up -d
+Security Recommendations
+    • Use strong basic authentication credentials
+    • Use HTTPS in production
+    • Restrict container exposure if using a reverse proxy
+    • Keep your encryption key private
