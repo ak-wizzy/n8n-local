@@ -27,10 +27,10 @@ services:
     volumes:
       - n8n_data:/home/node/.n8n
     networks:
-      - pilot-network
+      - reverse-proxy
 
 networks:
-  pilot-network:
+  reverse-proxy:
     external: true
 
 volumes:
