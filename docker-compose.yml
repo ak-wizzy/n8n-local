@@ -1,12 +1,10 @@
 version: "3.9"
 
 services:
-  n8n-aktechno:
+  n8n-automation:
     image: n8nio/n8n:latest
-    container_name: n8n-aktechno
+    container_name: n8n-automation
     restart: unless-stopped
-    ports:
-      - "5678:5678"
 
     environment:
       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
@@ -18,6 +16,13 @@ services:
       - WEBHOOK_URL=${WEBHOOK_URL}
       - NODE_ENV=${NODE_ENV}
       - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.n8n-automation.rule=Host(`automation.aktechnoservices.com`)"
+      - "traefik.http.routers.n8n-automation.entrypoints=websecure"
+      - "traefik.http.routers.n8n-automation.tls.certresolver=cloudflare"
+      - "traefik.http.services.n8n-automation.loadbalancer.server.port=5678"
 
     volumes:
       - n8n_data:/home/node/.n8n
