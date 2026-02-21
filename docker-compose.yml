@@ -22,6 +22,7 @@ services:
       - "traefik.http.routers.n8n-automation.rule=Host(`automation.aktechnoservices.com`)"
       - "traefik.http.routers.n8n-automation.entrypoints=websecure"
       - "traefik.http.routers.n8n-automation.tls.certresolver=cloudflare"
+      - "traefik.http.routers.n8n-automation.middlewares=secured-chain@docker"
       - "traefik.http.services.n8n-automation.loadbalancer.server.port=5678"
 
     volumes:
